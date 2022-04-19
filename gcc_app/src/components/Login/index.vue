@@ -43,22 +43,6 @@ export default {
       this.$router.push('/privacyagreement')
     },
   },
-  created() {
-    // 静态页面提示信息
-    if (this.$store.state.tips) {
-      const h = this.$createElement
-      this.$notify({
-        // 显示时间
-        duration: 10000,
-        title: '静态页面的相关信息',
-        // 置为HTML片段
-        dangerouslyUseHTMLString: true,
-        message:
-          '<h4>静态邮箱账号：12345678@123.com</h4><h4>静态密码：123456ABcd</h4><h4>静态登录图片验证码：btma</h4><h4>静态注册邮箱验证码：1234</h4><h3>PS:</h3></p><ul><li>登录：按照登录要求填写即可</li><li>注册：按照注册要求填写即可，但注册后，原账号会被覆盖</li><li>重置密码：由于重置密码在邮箱中进行重置，所以输入邮箱后点击即可，此处密码将被修改为<b>654321DCba</b></p></li></ul></p><p>由于后端正在开发中，本次校赛审核期间使用静态页面进行展示，我们会在截至前完成整个项目</p><h3 style="text-align: right;">感谢使用！</h3>',
-      })
-      this.$store.state.tips = false
-    }
-  },
 }
 </script>
 

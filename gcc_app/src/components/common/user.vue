@@ -6,7 +6,7 @@
     </div>
     <div class="user-img-father" @click="showAlter">
       <!-- :src="this.$store.state.user_img"  -->
-      <div class="user-img-son"><img src="@/assets/user_img.jpg" alt="" /></div>
+      <div class="user-img-son"><img :src="this.$store.state.user_img" alt="" /></div>
     </div>
   </div>
 </template>

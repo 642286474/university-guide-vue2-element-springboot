@@ -4,25 +4,19 @@
     <div>
       <div class="el-icon-close close" @click="closeInfor"></div>
       <div>
-        <h2>xxxx院</h2>
+        <h2>广州商学院</h2>
         <div class="img">
-          <a
-            href="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic.51yuansu.com%2Fbackgd%2Fcover%2F00%2F39%2F10%2F5be38f6f2685e.jpg%21%2Ffw%2F780%2Fquality%2F90%2Funsharp%2Ftrue%2Fcompress%2Ftrue&refer=http%3A%2F%2Fpic.51yuansu.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1652891529&t=1f7735d36f46c72aac51bc81852e739b"
-            target="_blank"
-            ><img
-              src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic.51yuansu.com%2Fbackgd%2Fcover%2F00%2F39%2F10%2F5be38f6f2685e.jpg%21%2Ffw%2F780%2Fquality%2F90%2Funsharp%2Ftrue%2Fcompress%2Ftrue&refer=http%3A%2F%2Fpic.51yuansu.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1652891529&t=1f7735d36f46c72aac51bc81852e739b"
-              alt=""
-          /></a>
+          <a href="http://www.gzcc.cn" target="_blank"><img src="@/assets/infor.jpg" alt="" /></a>
         </div>
-        <h4>xxxx院</h4>
+        <h4>广州商学院</h4>
         <h4>Guangzhou College of Commerce</h4>
-        <p class="content">xxxx院（Guangzhou College of Commerce），位于xx省xx市xxx，是经教育部批准设立的一所民办全日制普通本科院校，为xx省硕士学位授予立项建设单位、xx省自然科学基金项目依托单位、xx省第六批博士后创新实践基地单位。</p>
+        <p class="content">广州商学院（Guangzhou College of Commerce），位于广东省广州市中新广州知识城，是经教育部批准设立的一所民办全日制普通本科院校，为广东省硕士学位授予立项建设单位、广东省自然科学基金项目依托单位、广东省第六批博士后创新实践基地单位。</p>
         <p class="content">
-          学校前身是创办于xxxx年x月的xxxx大学xx学院。xxxx年x月，教育部确认xxxx大学xx学院为独立学院。xxxx年x月，学院获得学士学位授予权。xxxx年x月，经教育部批准转设为独立设置的民办普通高校，更名xxxx院。学校顺利通过xxxx年教育部本科教学工作合格评估。xxxx年，学校获批为xx博士工作站及硕士学位授予立项建设单位。
+          学校前身是创办于1997年9月的华南师范大学增城学院。2004年1月，教育部确认华南师范大学增城学院为独立学院。2012年1月，学院获得学士学位授予权。2014年5月，经教育部批准转设为独立设置的民办普通高校，更名广州商学院。学校顺利通过2020年教育部本科教学工作合格评估。2021年，学校获批为广东博士工作站及硕士学位授予立项建设单位。
         </p>
-        <p class="content">截至xxxx年x月，学校校园占地面积xxxx多亩，总建筑面积xx万余平方米，学校图书馆馆藏纸质图书xxx万册，电子图书xxx万册，教学科研仪器设备总值xxxx万元；设有xx院x部，全日制在校生数为xxxxx人。</p>
-        <span class="content left-box">创办时间：xxxx年</span>
-        <span class="content right-box">学校官网：<a href="http://www.baidu.com" target="_blank">http://www.baidu.com</a></span>
+        <p class="content">截至2022年1月，学校校园占地面积1000多亩，总建筑面积36万余平方米，学校图书馆馆藏纸质图书197.3万册，电子图书108.1万册，教学科研仪器设备总值9014.03万元；设有11院1部，全日制在校生数为19583人。</p>
+        <span class="content left-box">创办时间：1997年</span>
+        <span class="content right-box">学校官网：<a href="http://www.gzcc.cn" target="_blank">http://www.gzcc.cn</a></span>
       </div>
     </div>
   </div>

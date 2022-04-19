@@ -15,7 +15,7 @@
       </el-form-item>
       <el-form-item prop="text" class="input-text-box">
         <el-input class="input-text" type="text" v-model.number="ruleForm.code" autocomplete="off" placeholder="输入验证码"></el-input>
-        <img src="@/assets/static_code.png" alt="" />
+        <el-button type="button" @click="sendEmailCode">发送验证邮件</el-button>
       </el-form-item>
       <el-form-item class="submit-box">
         <el-button type="primary" @click="submitForm">登录</el-button>
@@ -79,17 +79,53 @@ export default {
     }
   },
   methods: {
+    //发送邮件验证码按钮
+    sendEmailCode() {
+      // 提交前预验证（邮箱是否填写）
+      if (this.ruleForm.email) {
+        console.log('邮箱存在')
+        this.$axios.post('users/sendemail', { email: this.ruleForm.email })
+      } else {
+        // 表单验证错误
+        return false
+      }
+    },
     // 登录按钮
     submitForm() {
-      if (this.ruleForm.email === this.$store.state.email && this.ruleForm.pass === this.$store.state.pass && this.ruleForm.code === this.$store.state.code) {
-        this.$message.success('登录成功！')
-        // 将登录成功的token值保存到客户端sessionStorage中
-        window.sessionStorage.setItem('token', '13579abcde24680')
-        //通过编程式导航跳转页面
-        this.$router.push('universitymap')
-      } else {
-        this.$message.error('登录失败，输入信息错误！')
-      }
+      // 表单提交前预验证
+      this.$refs.ruleFormRef.validate((valid) => {
+        // console.log(valid)
+        if (valid) {
+          // console.log('submit!!')
+          // alert('submit!')
+          this.$axios
+            .post('users/register', this.ruleForm)
+            .then((res) => {
+              console.log(res)
+              if (res.data.token) {
+                //token不为空
+                this.$message.success('登录成功')
+                // 将登录成功的token值保存到客户端sessionStorage中
+                window.sessionStorage.setItem('token', res.data.token)
+                this.$store.commit('setUserName', res.data.user_name)
+                this.$store.commit('setUserImg', res.data.user_img)
+                console.log(this.$store.state.user_name, this.$store.state.user_img)
+                //通过编程式导航跳转页面
+                this.$router.push('universitymap')
+              } else {
+                //token为空
+                this.$message.success('登录失败，输入信息错误！')
+              }
+            })
+            .catch((err) => {
+              console.error(err)
+            })
+        } else {
+          // 表单验证错误
+          // console.log('error submit!!')
+          return false
+        }
+      })
     },
     //注册按钮
     goLoginFrame() {
@@ -230,5 +266,25 @@ export default {
 }
 /deep/ .el-form-item {
   margin-bottom: 20px;
+}
+
+//发送验证邮件按钮
+/deep/ .input-text-box .el-button {
+  float: right;
+  border-width: 0px;
+  width: 137px;
+  height: 38px;
+  background: inherit;
+  background-color: rgba(56, 87, 157, 1);
+  border: none;
+  border-radius: 44px;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  font-family: '等线', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 16px;
+  color: #ffffff;
 }
 </style>

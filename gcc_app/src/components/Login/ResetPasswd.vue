@@ -48,12 +48,13 @@ export default {
     //重设密码按钮
     sendEmailCode() {
       // 提交前预验证（邮箱是否填写）
-      if (this.ruleForm.email === this.$store.state.email) {
-        this.$message.success('修改密码成功，密码为：654321DCba！')
-        //修改信息
-        this.$store.state.pass = '654321DCba'
+      if (this.ruleForm.email) {
+        console.log('邮箱存在')
+        this.$axios.post('users/resetpasswd', this.ruleForm)
       } else {
-        this.$message.error('邮箱不存在，请输入正确的邮箱！')
+        // 表单验证错误
+        // console.log('error submit!!')
+        return false
       }
     },
     //返回按钮

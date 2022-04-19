@@ -8,25 +8,15 @@ var store = new Vuex.Store({
         // 用于选择不同的框（登录->1、注册->2、重置密码->3）
         frame: 1,
         // 用户名
-        user_name: '水木淋',
+        user_name: '李广商',
         //用户头像
-        user_img: '',
+        user_img: '@/assets/user_img.jpg',
         //地图图片
         map_url: '',
         //信息显示框
         information: false,
         //修改信息框
         alter: false,
-        //静态邮箱账号
-        email: '12345678@123.com',
-        //静态密码
-        pass: '123456ABcd',
-        //静态图片验证码
-        code: 'btma',
-        //静态邮箱验证码
-        emailCode: '1234',
-        //静态页面的相关信息弹框
-        tips: true,
     },
     // 类似于过滤器，数据输出前可操作的数据
     getters: {

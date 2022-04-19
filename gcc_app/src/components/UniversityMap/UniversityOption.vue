@@ -4,8 +4,8 @@
     <el-dropdown @command="handleCommand">
       <el-button type="primary">&nbsp;{{ pitchOnUniversity }}<i class="el-icon-arrow-down el-icon--right"></i> </el-button>
       <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item command="xxxx院">xxxx院</el-dropdown-item>
-        <el-dropdown-item command="xx大学">xx大学</el-dropdown-item>
+        <el-dropdown-item command="广州商学院">广州商学院</el-dropdown-item>
+        <el-dropdown-item command="广州大学">广州大学</el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
   </div>
@@ -15,7 +15,7 @@
 export default {
   data() {
     return {
-      pitchOnUniversity: 'xxxx院',
+      pitchOnUniversity: '广州商学院',
       click: true,
     }
   },

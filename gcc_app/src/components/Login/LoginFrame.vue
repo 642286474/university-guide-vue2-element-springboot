@@ -95,7 +95,7 @@ export default {
       // 提交前预验证（邮箱是否填写）
       if (this.ruleForm.email) {
         console.log('邮箱存在')
-        this.$axios.post('sendemail', { email: this.ruleForm.email })
+        this.$axios.post('users/sendemail', { email: this.ruleForm.email })
       } else {
         // 表单验证错误
         return false
@@ -103,20 +103,41 @@ export default {
     },
     //注册按钮
     submitLoginForm() {
-      if (this.ruleForm.code != this.$store.state.emailCode) {
-        this.$message.error('验证码错误！')
-      } else if (this.ruleForm.email != this.$store.state.email) {
-        this.$message.success('注册成功！')
-        //修改信息
-        this.$store.state.email = this.ruleForm.email
-        this.$store.state.pass = this.ruleForm.pass
-        // 将登录成功的token值保存到客户端sessionStorage中
-        window.sessionStorage.setItem('token', '13579abcde24680')
-        //通过编程式导航跳转页面
-        this.$router.push('universitymap')
-      } else {
-        this.$message.error('注册失败，邮箱已存在！')
-      }
+      // 表单提交前预验证
+      console.log('点击注册按钮')
+      this.$refs.loginFormRef.validate((valid) => {
+        console.log(111)
+        if (valid) {
+          // console.log('submit!!')
+          // alert('submit!')
+          this.$axios
+            .post('users/login', this.ruleForm)
+            .then((res) => {
+              console.log(res)
+              if (res.data.token) {
+                //token不为空
+                this.$message.success('注册成功')
+                // 将注册成功的token值保存到客户端sessionStorage中
+                window.sessionStorage.setItem('token', res.data.token)
+                this.$store.commit('setUserName', res.data.user_name)
+                this.$store.commit('setUserImg', res.data.user_img)
+                console.log(this.$store.state.user_name, this.$store.state.user_img)
+                //注册成功后进行页面跳转
+                this.$router.push('universitymap')
+              } else {
+                //token为空
+                this.$message.success('注册失败，此邮箱已注册！')
+              }
+            })
+            .catch((err) => {
+              console.error(err)
+            })
+        } else {
+          // 表单验证错误
+          // console.log('error submit!!')
+          return false
+        }
+      })
     },
   },
 }
