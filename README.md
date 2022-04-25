@@ -7,9 +7,8 @@
 ## 相关依赖与安装说明
 
 链接：https://pan.baidu.com/s/1nwCo_HduriDnTiwfNT--Gg 
-提取码：l3b3
 
-![](C:\Users\64228\Desktop\大学漫游指南.jpg)
+提取码：l3b3
 
 ## 部署链接与说明
 
