@@ -11,6 +11,9 @@ import router from './router'
 Vue.config.productionTip = false
     // axios配置请求根路径
 axios.defaults.baseURL = 'http://127.0.0.1:5000/'
+// axios.defaults.baseURL = 'http://47.106.69.245:5000/'
+// axios.defaults.baseURL = '/'
+axios.defaults.headers['Content-Type'] = 'application/json'  //'application/x-www-form-urlencoded'
     // axios绑定到原型链
 Vue.prototype.$axios = axios
 

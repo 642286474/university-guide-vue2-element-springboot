@@ -4,8 +4,7 @@
     <el-dropdown @command="handleCommand">
       <el-button type="primary">&nbsp;{{ pitchOnUniversity }}<i class="el-icon-arrow-down el-icon--right"></i> </el-button>
       <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item command="广州商学院">广州商学院</el-dropdown-item>
-        <el-dropdown-item command="广州大学">广州大学</el-dropdown-item>
+        <el-dropdown-item v-for="item in this.$store.state.options" :key="item.id" :command="item">{{ item.university }}</el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
   </div>
@@ -22,18 +21,35 @@ export default {
   methods: {
     // 选择下拉菜单选项时触发
     handleCommand(command) {
-      //显示的选项
-      this.pitchOnUniversity = command
-      // 发送请求
-      this.$axios
-        .post('university', { university: this.pitchOnUniversity })
-        .then((res) => {
-          console.log(res)
-        })
-        .catch((err) => {
-          console.error(err)
-        })
+      //选择不同学校时触发
+      if (this.pitchOnUniversity != command.university) {
+        //显示的选项
+        this.pitchOnUniversity = command.university
+        //当前选中大学的id
+        this.$store.commit('setAtUniversityID', command.id)
+        // 发送请求
+        console.log(command.university, command.id)
+        this.$axios
+          .post('universities', { university: command.id })
+          .then((res) => {
+            console.log(res.data.datas)
+          })
+          .catch((err) => {
+            console.error(err)
+          })
+      }
     },
+  },
+  created() {
+    this.$axios
+      .get('universities/options')
+      .then((res) => {
+        this.$store.commit('setOptions', res.data.options)
+        console.log(this.$store.state.options)
+      })
+      .catch((err) => {
+        console.error(err)
+      })
   },
 }
 </script>

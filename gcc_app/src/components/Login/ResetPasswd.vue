@@ -47,9 +47,10 @@ export default {
   methods: {
     //重设密码按钮
     sendEmailCode() {
-      // 提交前预验证（邮箱是否填写）
-      if (this.ruleForm.email) {
-        console.log('邮箱存在')
+      // 提交前预验证（邮箱格式是否正确）
+      let reg = /^([a-zA-Z\d])(\w|\-)+@[a-zA-Z\d]+\.[a-zA-Z]{2,4}$/
+      if (reg.test(this.ruleForm.email)) {
+        console.log('邮箱格式正确')
         this.$axios.post('users/resetpasswd', this.ruleForm)
       } else {
         // 表单验证错误

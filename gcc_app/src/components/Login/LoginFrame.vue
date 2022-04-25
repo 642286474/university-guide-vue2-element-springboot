@@ -14,7 +14,7 @@
       <el-form-item prop="checkPass">
         <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off" placeholder="确认密码"></el-input>
       </el-form-item>
-      <el-form-item prop="code" class="input-text-box">
+      <el-form-item prop="text" class="input-text-box">
         <el-input class="input-text" type="text" v-model.number="ruleForm.code" autocomplete="off" placeholder="输入邮箱验证码"></el-input>
         <el-button type="button" @click="sendEmailCode">发送验证邮件</el-button>
       </el-form-item>
@@ -66,6 +66,14 @@ export default {
         callback()
       }
     }
+    //验证码位数验证
+    var validateCode = (rule, value, callback) => {
+      if (String(this.ruleForm.code).length !== 6) {
+        callback(new Error('请输入6位验证码'))
+      } else {
+        callback()
+      }
+    }
 
     return {
       ruleForm: {
@@ -82,6 +90,8 @@ export default {
         pass: [{ validator: validatePass, trigger: 'blur' }],
         //验证确认密码
         checkPass: [{ validator: validatePass2, trigger: 'blur' }],
+        //验证码位数验证
+        text: [{ validator: validateCode, trigger: 'blur' }],
       },
     }
   },
@@ -92,9 +102,10 @@ export default {
     },
     //发送邮件验证码按钮
     sendEmailCode() {
-      // 提交前预验证（邮箱是否填写）
-      if (this.ruleForm.email) {
-        console.log('邮箱存在')
+      /// 提交前预验证（邮箱格式是否正确）
+      let reg = /^([a-zA-Z\d])(\w|\-)+@[a-zA-Z\d]+\.[a-zA-Z]{2,4}$/
+      if (reg.test(this.ruleForm.email)) {
+        console.log('邮箱格式正确')
         this.$axios.post('users/sendemail', { email: this.ruleForm.email })
       } else {
         // 表单验证错误

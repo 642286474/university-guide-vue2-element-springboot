@@ -51,8 +51,8 @@ export default {
     }
     //验证码位数验证
     var validateCode = (rule, value, callback) => {
-      if (String(this.ruleForm.code).length !== 4) {
-        callback(new Error('请输入4位验证码'))
+      if (String(this.ruleForm.code).length !== 6) {
+        callback(new Error('请输入6位验证码'))
       } else {
         callback()
       }
@@ -81,10 +81,11 @@ export default {
   methods: {
     //发送邮件验证码按钮
     sendEmailCode() {
-      // 提交前预验证（邮箱是否填写）
-      if (this.ruleForm.email) {
-        console.log('邮箱存在')
-        this.$axios.post('users/sendemail', { email: this.ruleForm.email })
+      // 提交前预验证（邮箱格式是否正确）
+      let reg = /^([a-zA-Z\d])(\w|\-)+@[a-zA-Z\d]+\.[a-zA-Z]{2,4}$/
+      if (reg.test(this.ruleForm.email)) {
+        console.log('邮箱格式正确'+this.ruleForm.email)
+        this.$axios.post('users/sendemail', { email: this.ruleForm.email })//'email='+this.ruleForm.email
       } else {
         // 表单验证错误
         return false

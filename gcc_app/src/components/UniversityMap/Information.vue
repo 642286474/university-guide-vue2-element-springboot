@@ -1,22 +1,27 @@
 // 显示信息
 <template>
   <div class="information">
-    <div>
-      <div class="el-icon-close close" @click="closeInfor"></div>
-      <div>
-        <h2>广州商学院</h2>
-        <div class="img">
-          <a href="http://www.gzcc.cn" target="_blank"><img src="@/assets/infor.jpg" alt="" /></a>
+    <div class="el-icon-close close" @click="closeInfor"></div>
+    <!-- 数据内容 -->
+    <div class="datas">
+      <!-- 渲染信息 -->
+      <!-- 建筑名称 -->
+      <h2>{{ this.$store.state.atArchitectureName }}</h2>
+      <!-- 教学楼、运动场地、宿舍的数据 -->
+      <div v-if="datas.class === 'TeachingBuilding' || datas.class === 'SportsField' || datas.class === 'DormitoryBuilding'">
+        <div class="content-box" v-for="item in datas.datas" :key="datas.class === 'TeachingBuilding' ? item.class_floorid : datas.class === 'SportsField' ? item.sports_field_name : item.dormitory_building_name">
+          <i class="content">{{ datas.class === 'TeachingBuilding' ? '教室号：' + item.class_floorid : datas.class === 'SportsField' ? '运动场名称：' + item.sports_field_name : '公寓号：' + item.dormitory_building_name }}</i>
+          <i class="content">
+            {{ datas.class === 'TeachingBuilding' ? '楼层：' + item.class_floor : datas.class === 'SportsField' ? '所在楼层：' + item.sports_field_floor : '楼层：' + item.dormitory_building_height }}
+          </i>
+          <i class="content">
+            {{ datas.class === 'TeachingBuilding' ? '教室类型：' + item.class_name : datas.class === 'SportsField' ? '用户类型：' + item.sports_field_usertype : '公寓类型：' + item.dormitory_building_type }}
+          </i>
         </div>
-        <h4>广州商学院</h4>
-        <h4>Guangzhou College of Commerce</h4>
-        <p class="content">广州商学院（Guangzhou College of Commerce），位于广东省广州市中新广州知识城，是经教育部批准设立的一所民办全日制普通本科院校，为广东省硕士学位授予立项建设单位、广东省自然科学基金项目依托单位、广东省第六批博士后创新实践基地单位。</p>
-        <p class="content">
-          学校前身是创办于1997年9月的华南师范大学增城学院。2004年1月，教育部确认华南师范大学增城学院为独立学院。2012年1月，学院获得学士学位授予权。2014年5月，经教育部批准转设为独立设置的民办普通高校，更名广州商学院。学校顺利通过2020年教育部本科教学工作合格评估。2021年，学校获批为广东博士工作站及硕士学位授予立项建设单位。
-        </p>
-        <p class="content">截至2022年1月，学校校园占地面积1000多亩，总建筑面积36万余平方米，学校图书馆馆藏纸质图书197.3万册，电子图书108.1万册，教学科研仪器设备总值9014.03万元；设有11院1部，全日制在校生数为19583人。</p>
-        <span class="content left-box">创办时间：1997年</span>
-        <span class="content right-box">学校官网：<a href="http://www.gzcc.cn" target="_blank">http://www.gzcc.cn</a></span>
+      </div>
+      <!-- 饭堂的数据 -->
+      <div v-else-if="datas.class === 'Canteen'">
+        <p class="content">{{ datas.datas }}</p>
       </div>
     </div>
   </div>
@@ -24,31 +29,65 @@
 
 <script>
 export default {
+  data() {
+    return {
+      //数据
+      datas: {},
+      //测试
+      //饭堂数据
+      // datas:{
+      //   class: "Canteen",
+      //   datas: "鲜果缘水果捞、家家味焗饭、柳州螺蛳粉、客家风味小炒、SITTER茶空间、新一鸡排.汉堡.小串、阿妈靓食原味汤粉、一炖天香、星辰潮记风味、眷村阿嬷粢饭團、肠粉猪杂汤饭、粤肠玖肠粉、张率麻辣烫麻辣香锅",
+      // }
+    }
+  },
   methods: {
     //隐藏信息显示框
     closeInfor() {
       this.$store.commit('closeInformation')
     },
   },
+  created() {
+    console.log(this.$store.state.atUniversityID, this.$store.state.atArchitectureID)
+    this.$axios
+      .post('universities/architecture', { atUniversityID: this.$store.state.atUniversityID, atArchitectureID: this.$store.state.atArchitectureID })
+      .then((res) => {
+        this.datas = res.data
+        console.log(res.data)
+      })
+      .catch((err) => {
+        console.error(err)
+      })
+  },
 }
 </script>
 
 <style lang="less" scoped>
+i {
+  font-style: normal;
+}
+.father-box {
+  overflow: hidden;
+}
 .information {
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
   width: 700px;
+  max-height: 400px;
+  overflow-y: auto;
+  //overscroll-: ;
   padding: 50px;
   background: inherit;
   background-color: rgba(255, 255, 255, 1);
   border: none;
   border-radius: 20px;
   z-index: 2;
-  -moz-box-shadow: 0px 0px 5px rgba(112, 133, 166, 0.349019607843137);
+  -moz-box-shadow: 0px 0px 5px rgba(112, 133, 166, 0.144);
   -webkit-box-shadow: 0px 0px 5px rgb(112 133 166 / 35%);
   box-shadow: 0px 0px 5px rgb(112 133 166 / 35%);
+
   //关闭按钮
   .close {
     position: absolute;
@@ -67,11 +106,16 @@ export default {
       cursor: pointer;
     }
   }
-  .content {
+  .content-box {
     text-align: left;
-    line-height: 23px;
-    text-indent: 2em;
-    font-size: 13px;
+    .content {
+      display: inline-block;
+      text-align: left;
+      padding-right: 10px;
+      line-height: 23px;
+      text-indent: 2em;
+      font-size: 13px;
+    }
   }
   .left-box {
     float: left;
@@ -86,5 +130,8 @@ export default {
       color: #66f;
     }
   }
+}
+.information::-webkit-scrollbar {
+  display: none;
 }
 </style>
